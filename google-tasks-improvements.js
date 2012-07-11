@@ -46,21 +46,21 @@
         {
             regexp: /\B@\w+/,
             style: {
-                backgroundColor: '#663',
-                color: 'white',
+                backgroundColor: '#DDD',
+                color: '#666',
                 padding: '0 3px'
             }
         },
         {
             regexp: /\B\+\w+/,
             style: {
-                backgroundColor: '#666',
-                color: 'white',
+                backgroundColor: '#F3E7B2',
+                color: '#AB8B01',
                 padding: '0 3px'
             }
         },
         {
-            regexp: /\(\d+\)/,
+            regexp: /\{\d+\}/,
             style: {
                 backgroundColor: 'red',
                 color: 'white',
