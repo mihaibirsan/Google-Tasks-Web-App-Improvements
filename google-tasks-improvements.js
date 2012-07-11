@@ -228,16 +228,18 @@
     function stylizeAll() {
         var table = contentDocument.querySelector('table.v'); 
         $(table).find('tr .d').each(function () {
-            stylizeByTextElement(this.childNodes[0]);
+            for (var i = 0; i < this.childNodes.length; i++) {
+                stylizeByTextElement(this.childNodes[i]);
+            }
         });
     }
 
     function handleChanges(summaries) {
         var interestingChanges = [].concat(summaries[0].added, summaries[0].valueChanged);
         
-        // TODO: This method is flawed; this extension should operate at the cursor level better
-        if (interestingChanges.length == 1) stylizeByTextElement(interestingChanges[0]);
-        else if (interestingChanges.length > 1) stylizeAll();
+        interestingChanges.forEach(function (e) {
+            stylizeByTextElement(e);
+        });
 
         // Small fix for when nodes are moved around or cleared
         // Google Tasks doesn't seem to actually move nodes around... instead a series of add/remove operations are performed
