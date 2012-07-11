@@ -11,8 +11,7 @@
     {
       "run_at": "document_end",
       "matches": ["https://mail.google.com/tasks/ig"],
-      "js": ["jquery-1.7.2.min.js", "mutation_summary.js", "google-tasks-improvements.js"],
-      "all_frames": true
+      "js": ["jquery-1.7.2.min.js", "mutation_summary.js", "google-tasks-improvements.js"]
     }
   ]
 }
