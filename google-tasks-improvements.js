@@ -82,7 +82,7 @@
     }
 
     function stylizeByTextElement(e) {
-        if (e == undefined || e.data == undefined) return;
+        if (e == undefined || e.data == undefined || $(e.parentNode).closest('div.d').length == 0) return;
 
         // Line highlighting
         // Because of label highlighting, multiple text nodes are being created for the same row of text; thus we need to evaluate line-based highlighting separately.
