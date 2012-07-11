@@ -6,28 +6,52 @@
         return setTimeout(arguments.callee, 33);
     }
 
+    // TODO: Switch to stylesheet instead of inline styles
+    var lineHighlights = [
+        {
+            regexp: /→/,
+            style: {
+                backgroundColor: '#FFCC00'
+            }
+        },
+        {
+            regexp: /\(x\)/,
+            style: {
+                backgroundColor: '#FFBCBC'
+            }
+        },
+        {
+            regexp: /\/!\\/,
+            style: {
+                backgroundColor: '#FFFABC'
+            }
+        },
+        {
+            regexp: /★/,
+            style: {
+                backgroundColor: '#BCDEFF'
+            }
+        },
+        {
+            regexp: /☆/,
+            style: {
+                backgroundColor: '#DEEEFF'
+            }
+        }
+    ];
+
     function stylizeByTextElement(e) {
         if (e == undefined || e.data == undefined) return;
 
-        // TODO: when completely deleting a node or moving a node onto a blank node the styles don't go away (code doesn't reach this)
-        // TODO: Make these into configurable values
-        // TODO: Switch to stylesheet instead of inline styles
-        if (e.data.match(/★/)) {
-            $(e.parentElement).closest('tr').find('td').css({ backgroundColor: '#BCDEFF' });
-        }
-        else if (e.data.match(/☆/)) {
-            $(e.parentElement).closest('tr').find('td').css({ backgroundColor: '#DEEEFF' });
-        }
-        else if (e.data.match(/\/!\\/)) {
-            $(e.parentElement).closest('tr').find('td').css({ backgroundColor: '#FFFABC' });
-        }
-        else if (e.data.match(/\(x\)/)) {
-            $(e.parentElement).closest('tr').find('td').css({ backgroundColor: '#FFBCBC' });
-        }
-        else if (e.data.match(/→/)) {
-            $(e.parentElement).closest('tr').find('td').css({ backgroundColor: '#FFCC00' });
-        }
-        else {
+        var lineHighlighted = false;
+        lineHighlights.forEach(function (lineHighlight) {
+            if (lineHighlighted) return;
+            if (e.data.match(lineHighlight.regexp)) {
+                $(e.parentElement).closest('tr').find('td').css(lineHighlight.style);
+                lineHighlighted = true;
+            }
+        });
+        if (!lineHighlighted) {
             $(e.parentElement).closest('tr').find('td').css({ backgroundColor: '' });
         }
 
