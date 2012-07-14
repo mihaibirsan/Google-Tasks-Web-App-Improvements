@@ -1,0 +1,10 @@
+A Chrome extension that adds a few features to the Google Tasks web app.
+
+Features:
+* Highlighting tasks using symbols and other markers
+* On-the-fly labels for the tasks
+
+Upcoming features:
+* adjust the notes field height in details mode
+* search and filter tasks by tags
+* switch lists using keyboard shortcuts
