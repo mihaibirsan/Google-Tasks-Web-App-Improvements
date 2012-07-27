@@ -8,6 +8,8 @@
 
     var contentDocument = document.querySelector('iframe').contentDocument;
 
+    $('head', contentDocument).append('<link rel="stylesheet" type="text/css" href="' + chrome.extension.getURL('iframe.css') + '" />');
+
     // TODO: Switch to stylesheet instead of inline styles
     var lineHighlights = [
         {
