@@ -46,7 +46,7 @@
 
     var labelHighlights = [
         {
-            regexp: /\B@\w+/,
+            regexp: /\B@\w[\w-]*/,
             style: {
                 backgroundColor: '#EBDBDE',
                 color: '#662E37',
@@ -54,7 +54,7 @@
             }
         },
         {
-            regexp: /\B\#\w+/,
+            regexp: /\B\#\w[\w-]*/,
             style: {
                 backgroundColor: '#B3EFD3',
                 color: '#04A75B',
@@ -62,7 +62,7 @@
             }
         },
         {
-            regexp: /\B\+\w+/,
+            regexp: /\B\+\w[\w-]*/,
             style: {
                 backgroundColor: '#F3E7B2',
                 color: '#AB8B01',
