@@ -1,3 +1,44 @@
 textarea.ec {
     height: 600px;
 }
+
+/*
+  Originals below. The rest are calculated using Kuler by adjusting background-color.
+  background-color: #FFFFDB;
+  border-color: #F7E084;
+*/
+
+.arrow {
+    background-color: #FFCC00 !important;
+}
+.kc .arrow {
+    border-color: #F79400 !important;
+}
+
+.error {
+    background-color: #FFBCBC !important;
+}
+.kc .error {
+    border-color: #F7214C !important;
+}
+
+.warning {
+    background-color: #FFFABC !important;
+}
+.kc .warning {
+    border-color: #F7BC21 !important;
+}
+
+.filled-star {
+    background-color: #BCDEFF !important;
+}
+.kc .filled-star {
+    border-color: #21B8F7 !important;
+}
+
+.empty-star {
+    background-color: #DEEEFF !important;
+}
+.kc .empty-star {
+    border-color: #8ED6F7 !important;
+}

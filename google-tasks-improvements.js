@@ -10,40 +10,30 @@
 
     $('head', contentDocument).append('<link rel="stylesheet" type="text/css" href="' + chrome.extension.getURL('iframe.css') + '" />');
 
-    // TODO: Switch to stylesheet instead of inline styles
     var lineHighlights = [
         {
             regexp: /→/,
-            style: {
-                backgroundColor: '#FFCC00'
-            }
+            className: 'arrow'
         },
         {
             regexp: /\(x\)/,
-            style: {
-                backgroundColor: '#FFBCBC'
-            }
+            className: 'error'
         },
         {
             regexp: /\/!\\/,
-            style: {
-                backgroundColor: '#FFFABC'
-            }
+            className: 'warning'
         },
         {
             regexp: /★/,
-            style: {
-                backgroundColor: '#BCDEFF'
-            }
+            className: 'filled-star'
         },
         {
             regexp: /☆/,
-            style: {
-                backgroundColor: '#DEEEFF'
-            }
+            className: 'empty-star'
         }
     ];
 
+    // TODO: Switch to stylesheet instead of inline styles
     var labelHighlights = [
         {
             regexp: /\B@\w[\w-]*/,
@@ -99,15 +89,16 @@
         var lineData = $(e.parentNode).closest('div.d').text();
         var lineHighlighted = false;
         lineHighlights.forEach(function (lineHighlight) {
+            // clear any previous highlights
+            $(e.parentElement).closest('tr').find('td').removeClass(lineHighlight.className);
+
+            // apply new highlight, if not already highlighted and there's match
             if (lineHighlighted) return;
             if (lineData.match(lineHighlight.regexp)) {
-                $(e.parentElement).closest('tr').find('td').css(lineHighlight.style);
+                $(e.parentElement).closest('tr').find('td').addClass(lineHighlight.className);
                 lineHighlighted = true;
             }
         });
-        if (!lineHighlighted) {
-            $(e.parentElement).closest('tr').find('td').css({ backgroundColor: '' });
-        }
 
         // Label highlighting
         /* XXX: If new text is added outside a label that would fit the label, it's not properly added to the label;
