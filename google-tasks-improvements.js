@@ -245,8 +245,12 @@
         // Small fix for when nodes are moved around or cleared
         // Google Tasks doesn't seem to actually move nodes around... instead a series of add/remove operations are performed
         summaries[1].added.forEach(function (e, i, a) {
-            if (e.textContent == '')
-                $(e).closest('tr').find('td').css({ backgroundColor: '' });
+            if (e.textContent == '') {
+                lineHighlights.forEach(function (lineHighlight) {
+                    // clear any previous highlights
+                    $(e.parentElement).closest('tr').find('td').removeClass(lineHighlight.className);
+                });
+            }
         });
     }
 
