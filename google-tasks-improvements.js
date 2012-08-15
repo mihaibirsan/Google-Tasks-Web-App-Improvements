@@ -36,6 +36,28 @@
     // TODO: Switch to stylesheet instead of inline styles
     var labelHighlights = [
         {
+            // XXX: Google tasks seems to be adding a <wbr> tag after "/", which sometimes causes this label regex not to trigger...
+            regexp: /\/!\\/,
+            style: {
+                display: 'inline-block',
+                width: '3px',
+                height: '0',
+                borderColor: 'transparent transparent #F7BC21',
+                borderWidth: '0 7px 13px',
+                borderStyle: 'solid',
+                borderRadius: '0 0 3px 3px',
+                whiteSpace: 'nowrap',
+                textIndent: '-4px',
+                letterSpacing: '1px',
+                fontSize: '10px',
+                fontWeight: 'bold',
+                verticalAlign: '-1px',
+                color: 'white',
+                textShadow: '1px 1px rgba(0, 0, 0, .33)',
+                boxShadow: '0 1px rgba(0, 0, 0, .2)'
+            }
+        },
+        {
             regexp: /\B@\w[\w-]*/,
             style: {
                 backgroundColor: '#EBDBDE',
@@ -56,6 +78,15 @@
             style: {
                 backgroundColor: '#F3E7B2',
                 color: '#AB8B01',
+                padding: '0 3px'
+            }
+        },
+        {
+            regexp: /\{\*.*\*\}/,
+            style: {
+                backgroundColor: 'rgba(0, 0, 0, .6)',
+                color: 'white',
+                borderRadius: '2px',
                 padding: '0 3px'
             }
         },
