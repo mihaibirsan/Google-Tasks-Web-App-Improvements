@@ -58,6 +58,26 @@
             }
         },
         {
+            regexp: /\(x\)/,
+            style: {
+                display: 'inline-block',
+                width: '16px',
+                height: '15px',
+                margin: '0 1px 0 0',
+                background: '#F7214C',
+                borderRadius: '10px',
+                whiteSpace: 'nowrap',
+                textAlign: 'center',
+                letterSpacing: '1px',
+                fontSize: '10px',
+                fontWeight: 'bold',
+                verticalAlign: '1px',
+                color: 'white',
+                textShadow: '1px 1px rgba(0, 0, 0, .33)',
+                boxShadow: '0 1px rgba(0, 0, 0, .2)'
+            }
+        },
+        {
             regexp: /\B@\w[\w-]*/,
             style: {
                 backgroundColor: '#EBDBDE',
