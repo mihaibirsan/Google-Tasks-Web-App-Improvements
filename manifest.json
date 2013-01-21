@@ -1,8 +1,8 @@
 {
-  "name": "Google Tasks Improvements",
-  "version": "1.0",
+  "name": "Improvements for Google Tasks™",
+  "version": "1.0.1",
   "manifest_version": 2,
-  "description": "Adds coloring onto tasks, based on keywords",
+  "description": "Highlighting tasks and labels, based on keywords and patterns",
   "icons": {
     "16": "google-tasks-improvements-icon-16.png",
     "48": "google-tasks-improvements-icon-48.png",
@@ -11,7 +11,7 @@
   "content_scripts": [
     {
       "run_at": "document_end",
-      "matches": ["https://mail.google.com/tasks/ig"],
+      "matches": ["https://mail.google.com/tasks/ig*"],
       "js": ["jquery-1.7.2.min.js", "mutation_summary.js", "google-tasks-improvements.js"]
     }
   ],

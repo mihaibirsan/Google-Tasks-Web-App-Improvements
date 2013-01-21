@@ -29,6 +29,13 @@ textarea.ec {
     border-color: #F7BC21 !important;
 }
 
+.less-important {
+    opacity: .33;
+}
+.Ob .less-important {
+    opacity: 1;
+}
+
 .filled-star {
     background-color: #BCDEFF !important;
 }
@@ -41,4 +48,19 @@ textarea.ec {
 }
 .kc .empty-star {
     border-color: #8ED6F7 !important;
+}
+
+
+/* Task Count */
+.task-count {
+    position: absolute;
+    top: 0;
+    right: 0;
+    margin: 2px;
+    padding: 1px 5px;
+    border-radius: 20px;
+    font-size: 14px;
+    font-weight: bold;
+    color: white;
+    background: blue;
 }

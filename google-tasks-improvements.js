@@ -24,6 +24,10 @@
             className: 'warning'
         },
         {
+            regexp: /\(~\)/,
+            className: 'less-important'
+        },
+        {
             regexp: /★/,
             className: 'filled-star'
         },
@@ -77,6 +81,42 @@
                 boxShadow: '0 1px rgba(0, 0, 0, .2)'
             }
         },
+        {
+            regexp: /\(~\)/,
+            style: {
+                display: 'inline-block',
+                width: '14px',
+                height: '13px',
+                margin: '0 1px 0 0',
+                background: 'transparent',
+                border: '2px solid #666',
+                borderRadius: '10px',
+                whiteSpace: 'nowrap',
+                textAlign: 'center',
+                letterSpacing: '1px',
+                fontSize: '10px',
+                fontWeight: 'bold',
+                verticalAlign: '1px',
+                color: '#666',
+                boxShadow: '0 1px rgba(0, 0, 0, .2)'
+            }
+        },
+        /*
+            element.style {
+                background-color: #B3EFD3;
+                color: #04A75B;
+                padding: 0px 3px;
+                border-radius: 3px;
+                box-shadow: 1px 1px 1px rgba(0, 0, 0, .3);
+            }
+            element.style {
+                background-color: red;
+                color: white;
+                font-weight: bold;
+                padding: 0px 2px;
+                border-radius: 3px;
+            }
+        */
         {
             regexp: /\B@\w[\w-]*/,
             style: {
@@ -134,6 +174,8 @@
 
     function stylizeByTextElement(e) {
         if (e == undefined || e.data == undefined || $(e.parentNode).closest('div.d').length == 0) return;
+
+        if (e.textContent.match(/~\*/)) e.textContent = e.textContent.replace(/~\*/, "\x0A");
 
         // Line highlighting
         // Because of label highlighting, multiple text nodes are being created for the same row of text; thus we need to evaluate line-based highlighting separately.
@@ -316,4 +358,37 @@
             { element: '.d' }
         ]
     });
+
+
+// Task Count
+    var countElement = contentDocument.createElement('div');
+    countElement.className = 'task-count';
+    contentDocument.body.appendChild(countElement);
+
+    function fullCount() {
+        var count = 0;
+        Array.prototype.forEach.call(contentDocument.querySelectorAll('tr.p .d'), function (el, i, a) {
+            if ((el.textContent == null || el.textContent.match(/^\s*$/)) && el.childNodes.length == 0) return;
+            count++;
+        });
+        countElement.textContent = count;
+    }
+
+    new MutationSummary({
+        callback: fullCount,
+        rootNode: table.parentNode,
+        queries: [
+            { element: 'tr.p' }
+        ]
+    }); 
+
+    new MutationSummary({
+        callback: fullCount,
+        rootNode: table.parentNode,
+        queries: [
+            { element: '.d', elementAttributes: 'class' }
+        ]
+    }); 
+
+    fullCount();
 })();
