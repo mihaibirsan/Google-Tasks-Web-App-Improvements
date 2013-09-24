@@ -11,6 +11,9 @@ textarea.ec {
 .arrow {
     background-color: #FFCC00 !important;
 }
+.lesser-arrow {
+    background-color: #FFE680 !important;
+}
 .kc .arrow {
     border-color: #F79400 !important;
 }
@@ -48,6 +51,17 @@ textarea.ec {
 }
 .kc .empty-star {
     border-color: #8ED6F7 !important;
+}
+
+
+/* Current Date */
+.Z.current-date {
+    background: #444;
+    margin-left: 0 !important;
+    border-radius: 3px 3px 0 0;
+}
+.Z.current-date .Y {
+    color: white;
 }
 
 

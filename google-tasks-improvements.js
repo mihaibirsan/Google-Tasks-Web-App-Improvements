@@ -12,8 +12,12 @@
 
     var lineHighlights = [
         {
-            regexp: /→/,
+            regexp: /^→/,
             className: 'arrow'
+        },
+        {
+            regexp: /^⇨/,
+            className: 'lesser-arrow'
         },
         {
             regexp: /\(x\)/,
@@ -157,6 +161,19 @@
                 color: 'white',
                 fontWeight: 'bold',
                 padding: '0 3px'
+            }
+        },
+        {
+            regexp: /\{[^*\d].*\}/,
+            style: {
+                backgroundColor: '#FFD76E',
+                color: '#333',
+                fontSize: '9px',
+                textTransform: 'uppercase',
+                verticalAlign: 'bottom',
+                border: '1px solid #E1BA53',
+                borderRadius: '3px',
+                padding: '0 2px'
             }
         }
     ];
@@ -356,6 +373,36 @@
         queries: [
             { characterData: true },
             { element: '.d' }
+        ]
+    });
+
+// Current Date
+
+    function convertDate(date) {
+        var days = "Sunday Monday Tuesday Wednesday Thursday Friday Saturday".split(/ /);
+        var months = "Jan Feb Mar Apr May Jun Jul Aug Sep Oct Nov Dec".split(/ /);
+        return days[date.getDay()] + ", " + months[date.getMonth()] + " " + date.getDate() + ", " + date.getFullYear();
+    }
+
+    function markCurrentDate(summaries) {
+        var today = convertDate(new Date());
+
+        var interestingChanges = [].concat(summaries[0].added, summaries[0].valueChanged);
+        
+        interestingChanges.forEach(function (e) {
+            if (e) {
+                if ($(e).text() == today) {
+                    $(e).parent().addClass('current-date');
+                }
+            }
+        });
+    }
+
+    new MutationSummary({
+        callback: markCurrentDate,
+        rootNode: table.parentNode,
+        queries: [
+            { element: '.Y' }
         ]
     });
 
