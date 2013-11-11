@@ -78,3 +78,14 @@ textarea.ec {
     color: white;
     background: blue;
 }
+
+/* Filter Container */
+.Sb {
+    padding-bottom: 36px;
+}
+.filter-container {
+    box-sizing: border-box;
+    width: 100%;
+    padding: 3px;
+    margin-top: -36px;
+}

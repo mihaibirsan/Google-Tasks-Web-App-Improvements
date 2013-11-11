@@ -8,6 +8,124 @@
 
     var contentDocument = document.querySelector('iframe').contentDocument;
 
+/** Filtering */
+    $('head', contentDocument).append('<link rel="stylesheet" type="text/css" href="' + chrome.extension.getURL('bower_components/select2/select2.css') + '" />');
+
+    var $filterContainer = $('<div class="filter-container"></div>');
+    var $filter = $('<input type="text" name="filter" />');
+    $('.Sb', contentDocument).after($filterContainer);
+    $filterContainer.append($filter);
+
+    setTimeout(function () {
+        var win = document.querySelector('iframe').contentWindow;
+        win.dispatchEvent(new Event('resize', { view: win, bubbles: true, cancelable: true }));
+    }, 333);
+
+    var labels = [
+    ];
+
+    var updateLabels = function () {
+        var all = [];
+        $('tr.p:visible', contentDocument).each(function () {
+            all.push( $(this).find('.d').text() );
+        });
+        all = all.join('\x0A');
+        labels = _(labelHighlights)
+            .chain()
+            .collect(function (labelHighlight) {
+                return all.match(new RegExp(labelHighlight.regexp.source, 'g'));
+            })
+            .flatten()
+            .compact()
+            .reduce(function (memo, item) {
+                if (!memo[item]) {
+                    memo[item] = {
+                        label: item,
+                        count: 1
+                    };
+                } else {
+                    memo[item].count += 1;
+                }
+                return memo;
+            }, {})
+            .values()
+            .sortBy('count')
+            .reverse()
+            .pluck('label')
+            .value();
+    }
+
+    $filter
+        .select2({
+            multiple: true,
+            query: function (query) {
+                var data = {results: []};
+
+                $.each(labels, function(){
+                    if (query.term.length == 0 || this.toUpperCase().indexOf(query.term.toUpperCase()) >= 0) {
+                        data.results.push({ id: this.toUpperCase(), text: this });
+                    }
+                });
+
+                if (query.term.length > 0) {
+                    data.results.push({ id: query.term.toUpperCase(), text: query.term });
+                }
+
+                query.callback(data);
+            },
+            width: '100%'
+        })
+        .on('select2-focus', function (event) {
+            updateLabels();
+        })
+        .on('select2-blur', function (event) {
+            // cleaning up...
+            $('.select2-drop-mask', contentDocument).remove();
+        })
+        .on('change', function (event) {
+            var val = event.val;
+
+            if (val.length == 0) {
+                $('tr.p, tr.B', contentDocument).show();
+                updateLabels();
+                return;
+            }
+
+            function matching(text) {
+                for (var i = 0; i < val.length; i++) {
+                    if (text.toUpperCase().indexOf(val[i]) < 0) return false;
+                }
+                return true;
+            }
+            $('tr.p', contentDocument).each(function () {
+                $(this).toggle(matching($(this).find('.d').text()));
+            });
+
+            // hide empty groups
+            $('tr.B', contentDocument).each(function () {
+                var $c = $(this).next();
+                while ($c.is('tr.p:hidden')) $c = $c.next();
+                var hasVisibleChildren = $c.is('tr.p:visible');
+                $(this).toggle(hasVisibleChildren);
+            });
+
+            // 
+            updateLabels();
+        });
+
+    $(contentDocument).keyup(function (event) {
+        // Ctrl+/
+        if (event.ctrlKey && event.keyCode == 191) {
+            $filter.select2('open');
+        }
+    });
+
+    // XXX: Filtering breaks up/down selection; maybe we should override
+
+    // XXX: Do some profiling and improve code performance where possible
+
+
+/** Prettifying */
     $('head', contentDocument).append('<link rel="stylesheet" type="text/css" href="' + chrome.extension.getURL('iframe.css') + '" />');
 
     var lineHighlights = [

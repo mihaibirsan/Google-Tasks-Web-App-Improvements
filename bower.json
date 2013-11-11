@@ -1,0 +1,15 @@
+{
+  "name": "google-tasks-web-app-improvements",
+  "version": "1.0.0",
+  "ignore": [
+    "**/.*",
+    "node_modules",
+    "bower_components",
+    "test",
+    "tests"
+  ],
+  "devDependencies": {
+    "select2": "~3.4.0",
+    "lodash": "~2.3.0"
+  }
+}

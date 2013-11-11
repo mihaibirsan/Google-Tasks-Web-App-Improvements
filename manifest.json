@@ -12,10 +12,19 @@
     {
       "run_at": "document_end",
       "matches": ["https://mail.google.com/tasks/ig*"],
-      "js": ["jquery-1.7.2.min.js", "mutation_summary.js", "google-tasks-improvements.js"]
+      "js": [
+          "bower_components/lodash/dist/lodash.js",
+          "bower_components/jquery/jquery.js",
+          "bower_components/select2/select2.js",
+          "mutation_summary.js",
+          "google-tasks-improvements.js"
+      ]
     }
   ],
   "web_accessible_resources": [
-    "iframe.css"
+    "iframe.css",
+    "bower_components/select2/select2.css",
+    "bower_components/select2/select2.png",
+    "bower_components/select2/select2-spinner.gif"
   ]
 }
