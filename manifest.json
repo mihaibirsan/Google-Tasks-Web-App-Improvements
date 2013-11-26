@@ -16,6 +16,7 @@
           "bower_components/lodash/dist/lodash.js",
           "bower_components/jquery/jquery.js",
           "bower_components/select2/select2.js",
+          "bower_components/momentjs/moment.js",
           "mutation_summary.js",
           "google-tasks-improvements.js"
       ]

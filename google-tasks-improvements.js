@@ -86,7 +86,7 @@
             var val = event.val;
 
             if (val.length == 0) {
-                $('tr.p, tr.B', contentDocument).show();
+                $('tr.p, tr.B', contentDocument).css('display', '');
                 updateLabels();
                 return;
             }
@@ -531,19 +531,57 @@
     contentDocument.body.appendChild(countElement);
 
     function fullCount() {
-        var count = 0;
+        // XXX: This function is a performance mess; needs optimizing
+        var totalCount = 0;
+        var totalInFutureCount = 0;
+        var totalInFilterCount = 0;
+        var totalInFutureInFilterCount = 0;
+        var $table = $(table);
         Array.prototype.forEach.call(contentDocument.querySelectorAll('tr.p .d'), function (el, i, a) {
             if ((el.textContent == null || el.textContent.match(/^\s*$/)) && el.childNodes.length == 0) return;
-            count++;
+            var $trp = $(el).closest('tr.p');
+            // inFilter
+            var inFilter = $trp.is(':visible');
+
+            // inFuture
+            var inFuture = false;
+            var dueDate;
+            if ($trp.prevAll('tr.B').length > 0) {
+                dueDate = $trp.prevAll('tr.B').eq(0).text();
+            } else {
+                dueDate = $trp.find('span.u.ab').text();
+            }
+            if (dueDate != '' && dueDate != 'No due date') {
+                inFuture = moment(dueDate.replace(/^[^ ]+ /,'')).isAfter();
+            }
+            // if ($trp.find('span.u.ab').text())
+
+            // count
+            totalCount++;
+            if (inFuture) totalInFutureCount++;
+            if (inFilter) totalInFilterCount++;
+            if (inFuture && inFilter) totalInFutureInFilterCount++;
         });
-        countElement.textContent = count;
+
+        function f(total, future) {
+            if (future == 0) return ''+total;
+            return (total-future) + '+' + future;
+        }
+        if (totalInFilterCount < totalCount) {
+            countElement.textContent = 
+                f(totalInFilterCount, totalInFutureInFilterCount)
+                + ' of ' 
+                + f(totalCount, totalInFutureCount);
+        } else {
+            countElement.textContent = f(totalCount, totalInFutureCount);
+        }
     }
 
     new MutationSummary({
         callback: fullCount,
         rootNode: table.parentNode,
         queries: [
-            { element: 'tr.p' }
+            { element: 'tr.p', elementAttributes: 'style' }
         ]
     }); 
 
