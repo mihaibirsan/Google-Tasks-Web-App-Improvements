@@ -2,18 +2,20 @@
     // wait until the table is set
     if (document.querySelector('iframe') == null
             || document.querySelector('iframe').contentDocument == undefined
-            || document.querySelector('iframe').contentDocument.querySelector('table.v') == undefined) {
+            || document.querySelector('iframe').contentDocument.querySelector('table.v,table.z') == undefined) {
         return setTimeout(arguments.callee, 33);
     }
 
     var contentDocument = document.querySelector('iframe').contentDocument;
 
 /** Filtering */
-    $('head', contentDocument).append('<link rel="stylesheet" type="text/css" href="' + chrome.extension.getURL('bower_components/select2/select2.css') + '" />');
-
+    $('head').append('<link rel="stylesheet" type="text/css" href="' + chrome.extension.getURL('bower_components/select2/select2.css') + '" />');
+    
     var $filterContainer = $('<div class="filter-container"></div>');
     var $filter = $('<input type="text" name="filter" />');
     $('.Sb', contentDocument).after($filterContainer);
+    $('.gb .Tb', contentDocument).prepend($filterContainer);
+
     $filterContainer.append($filter);
 
     setTimeout(function () {
@@ -26,7 +28,7 @@
 
     var updateLabels = function () {
         var all = [];
-        $('tr.p:visible', contentDocument).each(function () {
+        $('tr.p:visible, tr.r:visible', contentDocument).each(function () {
             all.push( $(this).find('.d').text() );
         });
         all = all.join('\x0A');
@@ -86,7 +88,7 @@
             var val = event.val;
 
             if (val.length == 0) {
-                $('tr.p, tr.B', contentDocument).css('display', '');
+                $('tr.p, tr.r, tr.B', contentDocument).css('display', '');
                 updateLabels();
                 return;
             }
@@ -97,15 +99,15 @@
                 }
                 return true;
             }
-            $('tr.p', contentDocument).each(function () {
+            $('tr.p, tr.r', contentDocument).each(function () {
                 $(this).toggle(matching($(this).find('.d').text()));
             });
 
             // hide empty groups
             $('tr.B', contentDocument).each(function () {
                 var $c = $(this).next();
-                while ($c.is('tr.p:hidden')) $c = $c.next();
-                var hasVisibleChildren = $c.is('tr.p:visible');
+                while ($c.is('tr.p:hidden, tr.r:hidden')) $c = $c.next();
+                var hasVisibleChildren = $c.is('tr.p:visible, tr.r:visible');
                 $(this).toggle(hasVisibleChildren);
             });
 
@@ -455,7 +457,7 @@
     }
 
     function stylizeAll() {
-        var table = contentDocument.querySelector('table.v'); 
+        var table = contentDocument.querySelector('table.v,table.z'); 
         $(table).find('tr .d').each(function () {
             for (var i = 0; i < this.childNodes.length; i++) {
                 stylizeByTextElement(this.childNodes[i]);
@@ -484,7 +486,7 @@
 
     stylizeAll();
 
-    var table = contentDocument.querySelector('table.v'); 
+    var table = contentDocument.querySelector('table.v,table.z'); 
     var observer = new MutationSummary({
         callback: handleChanges,
         rootNode: table.parentNode,
@@ -537,9 +539,9 @@
         var totalInFilterCount = 0;
         var totalInFutureInFilterCount = 0;
         var $table = $(table);
-        Array.prototype.forEach.call(contentDocument.querySelectorAll('tr.p .d'), function (el, i, a) {
+        Array.prototype.forEach.call(contentDocument.querySelectorAll('tr.p .d, tr.r .d'), function (el, i, a) {
             if ((el.textContent == null || el.textContent.match(/^\s*$/)) && el.childNodes.length == 0) return;
-            var $trp = $(el).closest('tr.p');
+            var $trp = $(el).closest('tr.p, tr.r');
             // inFilter
             var inFilter = $trp.is(':visible');
 
@@ -581,7 +583,7 @@
         callback: fullCount,
         rootNode: table.parentNode,
         queries: [
-            { element: 'tr.p', elementAttributes: 'style' }
+            { element: 'tr.p, tr.r', elementAttributes: 'style' }
         ]
     }); 
 
