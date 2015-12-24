@@ -9,6 +9,7 @@
     var contentDocument = document.querySelector('iframe').contentDocument;
 
 /** Filtering */
+    $('head').append('<link rel="stylesheet" type="text/css" href="' + chrome.extension.getURL('google-tasks-improvements.css') + '" />');
     $('head').append('<link rel="stylesheet" type="text/css" href="' + chrome.extension.getURL('bower_components/select2/select2.css') + '" />');
     
     var $filterContainer = $('<div class="filter-container"></div>');
@@ -129,14 +130,15 @@
 
 /** Prettifying */
     $('head', contentDocument).append('<link rel="stylesheet" type="text/css" href="' + chrome.extension.getURL('iframe.css') + '" />');
-
+    $('head', contentDocument).append('<link rel="stylesheet" type="text/css" href="' + chrome.extension.getURL('bower_components/select2/select2.css') + '" />');
+   
     var lineHighlights = [
         {
-            regexp: /^→/,
+            regexp: /^→|^->/,
             className: 'arrow'
         },
         {
-            regexp: /^⇨/,
+            regexp: /^⇨|^=>/,
             className: 'lesser-arrow'
         },
         {
@@ -152,11 +154,11 @@
             className: 'less-important'
         },
         {
-            regexp: /★/,
+            regexp: /★|\(*\)/,
             className: 'filled-star'
         },
         {
-            regexp: /☆/,
+            regexp: /☆|\(o\)/,
             className: 'empty-star'
         }
     ];

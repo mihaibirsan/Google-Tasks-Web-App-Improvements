@@ -1,6 +1,6 @@
 {
   "name": "Improvements for Google Tasks™",
-  "version": "1.2",
+  "version": "1.3",
   "manifest_version": 2,
   "description": "Highlighting tasks and labels, based on keywords and patterns",
   "icons": {
@@ -23,9 +23,11 @@
     }
   ],
   "web_accessible_resources": [
+    "google-tasks-improvements.css",
     "iframe.css",
     "bower_components/select2/select2.css",
     "bower_components/select2/select2.png",
+    "bower_components/select2/select2x2.png",
     "bower_components/select2/select2-spinner.gif"
   ]
 }

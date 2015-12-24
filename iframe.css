@@ -69,7 +69,7 @@ textarea.ec {
 .task-count {
     position: absolute;
     top: 0;
-    right: 0;
+    left: 0;
     margin: 2px;
     padding: 1px 5px;
     border-radius: 20px;
@@ -87,4 +87,16 @@ textarea.ec {
     box-sizing: border-box;
     width: 100%;
     padding: 3px;
+    margin-top: 23px;
+}
+.filter-container ul {
+    list-style-type: none;
+    padding-left: 20px;
+}
+.filter-container ul input {
+    width: 80% !important;
+
+}
+.select2-offscreen {
+    display: none;
 }
